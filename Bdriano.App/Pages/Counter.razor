@@ -1,0 +1,26 @@
+﻿@page "/"
+@using Bdriano.Persistence
+@inject IBdrianoService BdrianoService
+@inject ICounterRepository CounterRepository
+
+@if (bdrianoCounter > 0) {
+    <div>
+        <span class="introduction">Call me...</span>
+        <br/>
+        <span class="bdriano">@(BdrianoService.Bdrianofy(bdrianoCounter))</span>
+    </div>
+} else {
+    <p>Loading...</p>
+}
+
+
+@functions {
+
+    private long bdrianoCounter = 0;
+
+    protected override async Task OnInitializedAsync() {
+        bdrianoCounter = await CounterRepository.GetCurrentAndIncrementAsync();
+
+    }
+
+}
